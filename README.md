@@ -1,0 +1,1 @@
+# plugins-vargal-additional-variation-gallery-for-woo
