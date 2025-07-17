@@ -1,0 +1,13 @@
+/*1.0.3 - 2025.06.10*/
+- Fixed: Errors from customers' feedback
+- Updated: Compatible with Flatsome theme - quick view
+- Updated: Compatible with Goya theme - quick view
+
+/*1.0.2 - 2025.04.24*/
+- Updated: VillaTheme support
+
+/*1.0.1 - 2025.04.24*/
+- Updated: VillaTheme support
+
+/**1.0.0 - 2025/
+- Release version 1.0.0
