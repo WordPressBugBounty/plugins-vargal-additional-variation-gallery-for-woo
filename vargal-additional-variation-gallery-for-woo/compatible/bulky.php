@@ -47,6 +47,7 @@ class VARGAL_Compatible_Bulky {
 		$index = array_search('gallery', $result['variation']);
 		if ($index !== false){
 			unset($result['variation'][$index]);
+			$result['variation'] = array_values($result['variation']);
 		}
 		return $result;
 	}

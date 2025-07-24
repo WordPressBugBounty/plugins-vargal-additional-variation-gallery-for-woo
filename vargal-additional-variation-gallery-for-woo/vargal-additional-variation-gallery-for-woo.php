@@ -3,7 +3,7 @@
  * Plugin Name: VARGAL - Additional Variation Gallery for Woo
  * Plugin URI: https://villatheme.com/extensions/vargal
  * Description: Easily set unlimited images or MP4/WebM videos for each WC product variation and display them when the customer selects
- * Version: 1.0.3
+ * Version: 1.0.4
  * Author: VillaTheme
  * Author URI: https://villatheme.com
  * License:           GPL v2 or later
@@ -13,7 +13,7 @@
  * Copyright 2025 VillaTheme.com. All rights reserved.
  * Tested up to: 6.8
  * WC requires at least: 7.0
- * WC tested up to: 9.9
+ * WC tested up to: 10.0
  * Requires PHP: 7.0
  * Requires at least: 5.0
  * Requires Plugins: woocommerce
@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'VARGAL_VERSION' ) ) {
-	define( 'VARGAL_VERSION', '1.0.3' );
+	define( 'VARGAL_VERSION', '1.0.4' );
 	define( 'VARGAL_NAME', 'VARGAL-Additional Variation Gallery for Woo' );
 	define( 'VARGAL_BASENAME', plugin_basename( __FILE__ ) );
 	define( 'VARGAL_DIR', plugin_dir_path( __FILE__ ) );
@@ -48,11 +48,14 @@ if ( ! class_exists( 'VARGAL_INIT' ) ) {
 	 */
 	class VARGAL_INIT {
 		public function __construct() {
-			add_action( 'before_woocommerce_init', array( $this, 'before_woocommerce_init' ) );
+			add_action( 'before_woocommerce_init', [ $this, 'before_woocommerce_init' ] );
 			add_action( 'plugins_loaded', [ $this, 'check_environment' ] );
 		}
 
 		public function check_environment( $recent_activate = false ) {
+			if (defined('VARGALPRO_VERSION')){
+				return;
+			}
 			if ( ! class_exists( 'VillaTheme_Require_Environment' ) ) {
 				require_once VARGAL_INCLUDES . 'support.php';
 			}
@@ -135,7 +138,7 @@ if ( ! class_exists( 'VARGAL_INIT' ) ) {
 		}
 		public function init() {
 			$this->load_plugin_textdomain();
-			if ( class_exists( 'VillaTheme_Support' )  &&  !defined('VARGALPRO_VERSION')) {
+			if ( class_exists( 'VillaTheme_Support' )) {
 				new VillaTheme_Support(
 					array(
 						'support'    => 'https://wordpress.org/support/plugin/vargal-additional-variation-gallery-for-woo/',
@@ -167,7 +170,7 @@ if ( ! class_exists( 'VARGAL_INIT' ) ) {
 			array_unshift( $links, $settings_link );
 			return $links;
 		}
-		public function before_woocommerce_init() {
+		public function before_woocommerce_init( $links ) {
 			if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
 				\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
 			}

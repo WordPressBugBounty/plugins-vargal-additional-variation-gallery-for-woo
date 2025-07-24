@@ -2,6 +2,10 @@
   display: none !important;
 }
 
+.vargal-control-nav-disabled {
+  display: none !important;
+}
+
 .vargal-thumb-video {
   position: relative;
   display: inline-flex;

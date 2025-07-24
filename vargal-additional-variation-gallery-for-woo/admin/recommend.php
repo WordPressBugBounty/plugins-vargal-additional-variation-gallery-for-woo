@@ -8,16 +8,13 @@ class VARGAL_Admin_Recommend {
     public static $plugins=[];
 
 	public function __construct() {
-        if (defined('VARGALPRO_VERSION')){
-            return;
-        }
 		$this->dismiss  = 'villatheme_vargal_install_recommended_plugins_dismiss';
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 	}
 
 
 	public function admin_enqueue_scripts() {
-		$prefix = 'swatches';
+		$prefix = 'vargal';
 		$dismiss_nonce = isset( $_REQUEST[$prefix.'_dismiss_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST[$prefix.'_dismiss_nonce'] ) ) : '';
 		if ( wp_verify_nonce( $dismiss_nonce,  $prefix.'_dismiss_nonce' ) && ! get_option( $this->dismiss ) ) {
 			update_option( $this->dismiss , time() , 'no');
@@ -36,7 +33,7 @@ class VARGAL_Admin_Recommend {
         $active_plugins = self::get_active_plugins();
 		$recommended_plugins = self::recommended_plugins();
         $notices =[];
-        $prefix = 'swatches';
+        $prefix = 'vargal';
 		foreach ( $recommended_plugins as $recommended_plugin ) {
 			$plugin_slug = $recommended_plugin['slug'];
             if (empty( $recommended_plugin['message_not_install'] ) && empty( $recommended_plugin['message_not_active'] )){

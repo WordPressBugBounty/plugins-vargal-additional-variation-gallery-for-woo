@@ -120,6 +120,7 @@
   position: relative;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
 }
 .vargal-thumb-video:before {
   content: "";

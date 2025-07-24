@@ -230,6 +230,9 @@ Little details like custom loaders can make your site feel more polished and pro
 6. Show gallery with top thumbnails
 
 == Changelog ==
+/*1.0.4 - 2025.07.24*/
+- Updated: VillaTheme support
+
 /*1.0.3 - 2025.06.10*/
 - Fixed: Errors from customers' feedback
 - Updated: Compatible with Flatsome theme - quick view

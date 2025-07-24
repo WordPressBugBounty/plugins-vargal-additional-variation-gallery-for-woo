@@ -7,12 +7,12 @@ if ( ! class_exists( 'VillaTheme_Support' ) ) {
 
 	/**
 	 * Class VillaTheme_Support
-	 * 1.1.16
+	 * 1.1.17
 	 */
 	class VillaTheme_Support {
 		protected $plugin_base_name;
 		protected $ads_data;
-		protected $version = '1.1.16';
+		protected $version = '1.1.17';
 		protected $data = [];
 
 		public function __construct( $data ) {
@@ -152,6 +152,11 @@ if ( ! class_exists( 'VillaTheme_Support' ) ) {
 			return $return;
 		}
         public function plugin_information($args = array() ){
+	        global $wp_version;
+	        $wp_version1 = $wp_version;
+            if (!$wp_version){
+	            $wp_version1 = '5.0';
+            }
 	        if ( is_array( $args ) ) {
 		        $args = (object) $args;
 	        }
@@ -160,7 +165,7 @@ if ( ! class_exists( 'VillaTheme_Support' ) ) {
 	        }
 
 	        if ( ! isset( $args->wp_version ) ) {
-		        $args->wp_version = substr( wp_get_wp_version(), 0, 3 ); // x.y
+		        $args->wp_version = substr( $wp_version1, 0, 3 ); // x.y
 	        }
 	        $url = 'https://api.wordpress.org/plugins/info/1.2/';
 	        $url = add_query_arg(
@@ -177,7 +182,7 @@ if ( ! class_exists( 'VillaTheme_Support' ) ) {
 	        }
 	        $http_args = array(
 		        'timeout'    => 15,
-		        'user-agent' => 'WordPress/' . wp_get_wp_version() . '; ' . home_url( '/' ),
+		        'user-agent' => 'WordPress/' . $wp_version1 . '; ' . home_url( '/' ),
 	        );
 	        $request   = wp_remote_get( $url, $http_args );
 	        if ( $ssl && is_wp_error( $request ) ) {

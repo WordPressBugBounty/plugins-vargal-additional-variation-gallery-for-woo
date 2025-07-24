@@ -1,3 +1,6 @@
+/*1.0.4 - 2025.07.24*/
+- Updated: VillaTheme support
+
 /*1.0.3 - 2025.06.10*/
 - Fixed: Errors from customers' feedback
 - Updated: Compatible with Flatsome theme - quick view

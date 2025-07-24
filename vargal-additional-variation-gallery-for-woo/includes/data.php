@@ -145,19 +145,19 @@ class VARGAL_DATA {
 		) );
 		$tmp = $tags;
 		foreach ( $tmp as $key => $value ) {
-			if ( in_array( $key, array( 'div', 'span', 'a', 'form', 'select', 'option', 'table', 'tr', 'th', 'td' ) ) ) {
-				$tags[ $key ] = wp_parse_args( [
-					'width'  => 1,
-					'height' => 1,
-					'class'  => 1,
-					'id'     => 1,
-					'type'   => 1,
-					'style'  => 1,
-					'data-*' => 1,
-				],$value);
-			}
+			$tags[ $key ] = wp_parse_args( [
+				'width'  => 1,
+				'height' => 1,
+				'class'  => 1,
+				'id'     => 1,
+				'type'   => 1,
+				'style'  => 1,
+				'data-*' => 1,
+				'fetchpriority' => 1,
+				'loading' => 1,
+			],$value);
 		}
-		self::$allow_html = $tags;
+		self::$allow_html = apply_filters('vargal_filter_allowed_html',$tags);
 		return self::$allow_html;
 	}
 	public static function implode_html_attributes( $raw_attributes ) {

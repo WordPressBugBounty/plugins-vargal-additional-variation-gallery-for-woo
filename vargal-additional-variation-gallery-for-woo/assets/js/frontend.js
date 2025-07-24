@@ -574,11 +574,10 @@
             });
         }
         if (vargal_params?.lightbox_icon ){
-            $gallery.css({position: 'relative'});
-            if (!$gallery.find('.woocommerce-product-gallery__trigger').length){
-                $gallery.append(`<a href="#" class="woocommerce-product-gallery__trigger" aria-haspopup="dialog" aria-label="${wc_single_product_params.i18n_product_gallery_trigger_text}"></a>`);
+            if (!$gallery.find('.vargal-product-gallery__wrapper').find('.woocommerce-product-gallery__trigger').length){
+                $gallery.find('.woocommerce-product-gallery__trigger').remove();
+                $gallery.find('.vargal-product-gallery__wrapper').append(`<a href="#" class="woocommerce-product-gallery__trigger" aria-haspopup="dialog" aria-label="${wc_single_product_params.i18n_product_gallery_trigger_text}"></a>`);
                 $gallery.find('.woocommerce-product-gallery__trigger').append('<span aria-hidden="true">🔍</span>');
-                $gallery.css({position: 'relative'});
             }
         }
         if ($gallery.find('.woocommerce-product-gallery__image').length === 1){
@@ -636,7 +635,7 @@
         if (['top'].includes(vargal_params.current_thumbnail_pos)){
             $gallery.find('.vargal-control-nav-wrap').css({'max-height': item_width+'px'});
         }
-        $gallery.find('.vargal-control-nav li').css({'min-width': item_width+'px','max-width': item_width+'px'});
+        $gallery.find('.vargal-control-nav li, .vargal-control-nav li a').css({'min-width': item_width+'px','max-width': item_width+'px','max-height': item_width+'px','overflow':'hidden'});
         if (vargal_params?.thumbnail_slide){
             let item_margin= parseFloat(vargal_params.thumbnail_gap), wrap_width=$gallery.outerWidth();
             let max_item = Math.floor((wrap_width - item_width) / (item_width + item_margin)) + 1;

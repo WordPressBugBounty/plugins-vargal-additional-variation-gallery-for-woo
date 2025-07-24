@@ -33,9 +33,6 @@ class VARGAL_Admin_Settings {
 	}
 	public function page_callback(){
 		$prefix = self::$settings::$prefix;
-		if ( isset( $_POST["_villatheme_{$prefix}_settings_nonce"] )) {// phpcs:ignore WordPress.Security.NonceVerification.Missing
-			self::$settings = VARGAL_DATA::get_instance( true );
-		}
 		$tabs       = apply_filters("villatheme_{$prefix}_settings_tabs",array(
 			'general' => esc_html__( 'General', 'vargal-additional-variation-gallery-for-woo' ),
 			'template' => esc_html__( 'Gallery Template', 'vargal-additional-variation-gallery-for-woo' ),
@@ -470,6 +467,7 @@ class VARGAL_Admin_Settings {
 		$args                    = apply_filters( "villatheme_{$prefix}_save_plugin_settings_params", $args );
 		$vargal_params = $args;
 		update_option( 'vargal_params', $args,'no' );
+		self::$settings = VARGAL_DATA::get_instance( true );
 	}
 	public function admin_enqueue_scripts() {
 		$menu_slug = self::$settings::$prefix;
