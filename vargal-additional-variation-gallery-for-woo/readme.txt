@@ -28,6 +28,10 @@ Introducing VARGAL – Additional Variation Gallery for WooCommerce. Your all-in
 
 >[Try the Demo](http://new2new.com/?item=vargal "Demo VARGAL") |[Documents](https://docs.villatheme.com/?item=vargal "Documents") | [Facebook group](https://www.facebook.com/groups/villatheme "VillaTheme")
 
+###Preview
+[youtube https://youtu.be/jKh8X88WV4k]
+
+###How to install and use the plugin
 [youtube https://youtu.be/s0dU_f0JaBA]
 
 ### Important Notice:
