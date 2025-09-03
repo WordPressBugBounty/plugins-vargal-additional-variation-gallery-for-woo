@@ -99,13 +99,6 @@ class VARGAL_Admin_Settings {
 		<?php
 	}
     public function general_options(){
-        $fields = [
-	        'enable'                    => [
-		        'type'  => 'checkbox',
-		        'value' => self::$settings->get_params( 'enable' ),
-		        'title' => esc_html__( 'Enable', 'vargal-additional-variation-gallery-for-woo' ),
-	        ],
-        ];
         $loading_icon_options = array(
 	        '0'                => esc_html__( 'Hidden', 'vargal-additional-variation-gallery-for-woo' ),
 	        'default'          => esc_html__( 'Default', 'vargal-additional-variation-gallery-for-woo' ),
@@ -121,43 +114,67 @@ class VARGAL_Admin_Settings {
 	        'spinner'          => esc_html__( 'Spinner', 'vargal-additional-variation-gallery-for-woo' ),
         );
         $loading_icon_type = self::$settings->get_params('loading_icon_type');
-        ob_start();
         ?>
-        <div class="vi-ui fields">
-            <div class="vi-ui thirteen wide field">
-                <select name="loading_icon_type" class="vi-ui dropdown vargal-loading_icon_type" id="vargal-loading_icon_type">
-                    <?php
-                    foreach ($loading_icon_options as $k => $v){
-                        ?>
-                        <option value="<?php echo esc_attr($k)?>" <?php selected($k, $loading_icon_type) ?>><?php echo esc_html($v) ?></option>
-                        <?php
-                    }
-                    ?>
-                </select>
-                <p class="description"><?php esc_html_e('Style', 'vargal-additional-variation-gallery-for-woo'); ?></p>
+        <div class="vi-ui equal width fields vargal-general-settings-wrap">
+            <div class="field">
+                <?php
+                $fields = [
+	                'enable'                    => [
+		                'type'  => 'checkbox',
+		                'value' => self::$settings->get_params( 'enable' ),
+		                'title' => esc_html__( 'Enable', 'vargal-additional-variation-gallery-for-woo' ),
+	                ],
+                ];
+                ob_start();
+                ?>
+                <div class="vi-ui equal width fields">
+                    <div class="vi-ui field">
+                        <select name="loading_icon_type" class="vi-ui dropdown vargal-loading_icon_type" id="vargal-loading_icon_type">
+				            <?php
+				            foreach ($loading_icon_options as $k => $v){
+					            ?>
+                                <option value="<?php echo esc_attr($k)?>" <?php selected($k, $loading_icon_type) ?>><?php echo esc_html($v) ?></option>
+					            <?php
+				            }
+				            ?>
+                        </select>
+                        <p class="description"><?php esc_html_e('Style', 'vargal-additional-variation-gallery-for-woo'); ?></p>
+                    </div>
+                    <div class="vi-ui field">
+                        <input type="text"
+                               class="vargal-color vargal-loading_icon_color"
+                               name="loading_icon_color"
+                               value="<?php echo esc_attr( self::$settings->get_params('loading_icon_color') ) ?>">
+                        <p class="description"><?php esc_html_e('Color', 'vargal-additional-variation-gallery-for-woo'); ?></p>
+                    </div>
+                </div>
+	            <?php
+	            $tmp_html = ob_get_clean();
+	            $fields += [
+		            'loading_icon_type'   => [
+			            'title' => esc_html__( 'Loading icon', 'vargal-additional-variation-gallery-for-woo' ),
+			            'html'  => $tmp_html,
+		            ],
+		            'product_video'                => [
+			            'type'   => 'premium_option',
+			            'title'  => esc_html__( 'Product video', 'vargal-additional-variation-gallery-for-woo' ),
+			            'desc'  => esc_html__( 'Set a video as the featured image or variation image for your product', 'vargal-additional-variation-gallery-for-woo' ),
+		            ],
+	            ];
+	            $fields   = [
+		            'section_start' => [],
+		            'section_end'   => [],
+		            'fields'        => $fields
+	            ];
+	            self::$settings::villatheme_render_table_field( $fields );
+                ?>
             </div>
-            <div class="vi-ui three wide field">
-                <input type="text"
-                       class="vargal-color vargal-loading_icon_color"
-                       name="loading_icon_color"
-                       value="<?php echo esc_attr( self::$settings->get_params('loading_icon_color') ) ?>">
-                <p class="description"><?php esc_html_e('Color', 'vargal-additional-variation-gallery-for-woo'); ?></p>
+            <div class="vi-ui field">
+                <div class="field vagal-loading-icon-preview"></div>
             </div>
         </div>
-        <div class="field vagal-loading-icon-preview"></div>
         <?php
-        $tmp_html = ob_get_clean();
-        $fields += [
-	        'loading_icon_type'   => [
-		        'title' => esc_html__( 'Loading icon', 'vargal-additional-variation-gallery-for-woo' ),
-		        'html'  => $tmp_html,
-	        ]
-        ];
-	    return [
-		    'section_start' => [],
-		    'section_end'   => [],
-		    'fields'        => $fields
-	    ];
+        return '';
     }
     public function template_options(){
 	    ?>
@@ -196,6 +213,15 @@ class VARGAL_Admin_Settings {
 		        'title' => esc_html__( 'Default Gallery', 'vargal-additional-variation-gallery-for-woo' ),
 		        'desc' => esc_html__( 'Display the default gallery in the variation gallery.', 'vargal-additional-variation-gallery-for-woo' ),
 	        ],
+	        'default_video'                => [
+		        'type'   => 'premium_option',
+		        'title'  => esc_html__( 'Set videos as product gallery', 'vargal-additional-variation-gallery-for-woo' ),
+	        ],
+	        'video_auto_play'                => [
+		        'type'   => 'premium_option',
+		        'title'  => esc_html__( 'Auto play video', 'vargal-additional-variation-gallery-for-woo' ),
+		        'desc'  => esc_html__( 'Automatically play the video when switching the gallery.', 'vargal-additional-variation-gallery-for-woo' ),
+	        ],
 	        'zoom'                    => [
 		        'type'  => 'checkbox',
 		        'value' => self::$settings->get_params( 'zoom' ),
@@ -231,6 +257,14 @@ class VARGAL_Admin_Settings {
                 ?>
                 <p class="description"><?php esc_html_e('Speed', 'vargal-additional-variation-gallery-for-woo'); ?></p>
             </div>
+            <div class="field">
+		        <?php
+		        self::$settings::villatheme_render_field('auto_play_pause',[
+			        'type'=>'premium_option',
+		        ]);
+		        ?>
+                <p class="description"><?php esc_html_e('Pause on hover', 'vargal-additional-variation-gallery-for-woo'); ?></p>
+            </div>
         </div>
         <?php
         $tmp_html = ob_get_clean();
@@ -245,6 +279,7 @@ class VARGAL_Admin_Settings {
 		        'title' => esc_html__( 'Image Transition', 'vargal-additional-variation-gallery-for-woo' ),
 		        'desc' => esc_html__( 'Image transition for slide gallery', 'vargal-additional-variation-gallery-for-woo' ),
 		        'options'  =>self::$settings->get_img_transiton_options() ,
+		        'pro_options'  =>self::$settings->get_img_transiton_options_pro() ,
 	        ],
 	        'navigation_pos'                    => [
 		        'type'  => 'select',
@@ -252,6 +287,15 @@ class VARGAL_Admin_Settings {
 		        'title' => esc_html__( 'Navigation', 'vargal-additional-variation-gallery-for-woo' ),
 		        'desc' => esc_html__( 'Show the image switch icon for the gallery', 'vargal-additional-variation-gallery-for-woo' ),
 		        'options'  => self::$settings->get_navigation_pos_options(),
+		        'pro_options'  =>self::$settings->get_navigation_pos_options_pro() ,
+	        ],
+	        'nav_design'                => [
+		        'type'   => 'premium_option',
+		        'title'  => esc_html__( 'Navigation design', 'vargal-additional-variation-gallery-for-woo' ),
+	        ],
+	        'show_nav_dot'                => [
+		        'type'   => 'premium_option',
+		        'title'  => esc_html__( 'Show navigation dot', 'vargal-additional-variation-gallery-for-woo' ),
 	        ],
         ];
         $fields['fields'] = $args;
@@ -274,6 +318,34 @@ class VARGAL_Admin_Settings {
 		        'value' => self::$settings->get_params( 'lightbox_icon' ),
 		        'title' => esc_html__( 'Icon', 'vargal-additional-variation-gallery-for-woo' ),
 		        'desc' => esc_html__( 'Show icon lightbox on the product gallery', 'vargal-additional-variation-gallery-for-woo' ),
+	        ],
+	        'icon_type'                => [
+		        'type'   => 'premium_option',
+		        'title'  => esc_html__( 'Icon type', 'vargal-additional-variation-gallery-for-woo' ),
+	        ],
+	        'icon_pos'                => [
+		        'type'   => 'premium_option',
+		        'title'  => esc_html__( 'Icon position', 'vargal-additional-variation-gallery-for-woo' ),
+	        ],
+	        'style'                => [
+		        'type'   => 'premium_option',
+		        'title'  => esc_html__( 'Lightbox color', 'vargal-additional-variation-gallery-for-woo' ),
+	        ],
+	        'nav_img_name'                => [
+		        'type'   => 'premium_option',
+		        'title'  => esc_html__( 'Show image name', 'vargal-additional-variation-gallery-for-woo' ),
+	        ],
+	        'nav_full_screen'                => [
+		        'type'   => 'premium_option',
+		        'title'  => esc_html__( 'Allow show image full screen', 'vargal-additional-variation-gallery-for-woo' ),
+	        ],
+	        'nav_icon'                => [
+		        'type'   => 'premium_option',
+		        'title'  => esc_html__( 'Navigation icon', 'vargal-additional-variation-gallery-for-woo' ),
+	        ],
+	        'nav_style'                => [
+		        'type'   => 'premium_option',
+		        'title'  => esc_html__( 'Navigation Style', 'vargal-additional-variation-gallery-for-woo' ),
 	        ],
         ];
         $fields['fields'] = $args;
@@ -301,6 +373,10 @@ class VARGAL_Admin_Settings {
 			    'type'  => 'checkbox',
 			    'value' => self::$settings->get_params( 'thumbnail_slide' ),
 			    'title' => esc_html__( 'Display as slide', 'vargal-additional-variation-gallery-for-woo' ),
+		    ],
+		    'infinite_loop'                => [
+			    'type'   => 'premium_option',
+			    'title'  => esc_html__( 'Infinite loop', 'vargal-additional-variation-gallery-for-woo' ),
 		    ],
 	    ];
 	    ob_start();
@@ -345,6 +421,11 @@ class VARGAL_Admin_Settings {
 		    'thumbnail_gap'                    => [
 			    'title' => esc_html__( 'Gap', 'vargal-additional-variation-gallery-for-woo' ),
 			    'html'  => $tmp_html,
+		    ],
+		    'make_beauty'                => [
+			    'type'   => 'premium_option',
+			    'title'  => esc_html__( 'Make beauty', 'vargal-additional-variation-gallery-for-woo' ),
+			    'desc'  => esc_html__( 'The number of thumbnails will be automatically adjusted so their total size aligns with the slide gallery size', 'vargal-additional-variation-gallery-for-woo' ),
 		    ],
 	    ];
 	    ob_start();

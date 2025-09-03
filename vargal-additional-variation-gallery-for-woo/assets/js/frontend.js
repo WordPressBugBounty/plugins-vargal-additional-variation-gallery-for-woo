@@ -335,7 +335,11 @@
                     });
                 }
             } else {
-                $html.find('a').append(vargal_params.default_product_gallery[product_id].find('img').eq(0).clone());
+                let $img = '<img  src="' + galleryElement.src + '">';
+                if (vargal_params.default_product_gallery[product_id].find('img:not(.woocommerce-placeholder)').length) {
+                    $img = vargal_params.default_product_gallery[product_id].find('img:not(.woocommerce-placeholder)').eq(0).clone();
+                }
+                $html.find('a').append($img);
                 $html.find('img').attr({
                     'data-large_image_height': galleryElement.full_src_h,
                     'data-large_image_width': galleryElement.full_src_w,

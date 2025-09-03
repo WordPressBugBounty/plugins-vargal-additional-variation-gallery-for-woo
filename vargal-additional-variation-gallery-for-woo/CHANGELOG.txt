@@ -1,3 +1,6 @@
+/*1.0.5 - 2025.09.03*/
+-Updated: Link to pro version
+
 /*1.0.4 - 2025.07.24*/
 - Updated: VillaTheme support
 

@@ -92,6 +92,29 @@ Little details like custom loaders can make your site feel more polished and pro
 
 -Replace your current VARGAL gallery content with the imported one
 
+### PREMIUM FEATURES
+All features from the free version.
+
+&#9658; **Set video as product featured image/variation image**:Use a video instead of an image as the main visual for a product or variation
+
+&#9658; **Set videos as product gallery**
+
+&#9658; **Auto play video**:Automatically plays the video when it loads, without requiring user interaction
+
+&#9658; **Auto-adjust the number of visible thumbnails to fit beautifully within the layout**
+
+&#9658; **More gallery transition effects such as circle, mask, split, bubble, blur, rotate, and more**
+
+&#9658; **More navigation position such as center left, center right, top left,...**
+
+&#9658; **More navigation styles available, and you can design your own **
+
+&#9658; **Show navigation dot **
+
+&#9658; **You can design the lightbox **
+
+&#9658; **Create beautiful thumbnails**: The number of thumbnails will be automatically adjusted so their total size aligns with the slide gallery size
+
 ### 3rd party libraries & service
 - We also suggest products that can be integrated with this plugin to enhance the WooCommerce site design by including images & links to some of our plugins from the following lists:
 &#9658; [VillaTheme's suggested plugin](https://profiles.wordpress.org/villatheme/#content-plugins), [WP policy](https://codex.wordpress.org/WordPress_Policies), [VillaTheme policy](https://villatheme.com/privacy-policy/)
@@ -234,6 +257,9 @@ Little details like custom loaders can make your site feel more polished and pro
 6. Show gallery with top thumbnails
 
 == Changelog ==
+/*1.0.5 - 2025.09.03*/
+-Updated: Link to pro version
+
 /*1.0.4 - 2025.07.24*/
 - Updated: VillaTheme support
 

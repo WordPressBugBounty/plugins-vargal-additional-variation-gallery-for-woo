@@ -15,6 +15,10 @@ class VARGAL_Admin_Recommend {
 
 	public function admin_enqueue_scripts() {
 		$prefix = 'vargal';
+		$page = isset( $_REQUEST['page'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['page'] ) ) : '';
+		if (strpos( $page , $prefix) !== 0 ){
+			return;
+		}
 		$dismiss_nonce = isset( $_REQUEST[$prefix.'_dismiss_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST[$prefix.'_dismiss_nonce'] ) ) : '';
 		if ( wp_verify_nonce( $dismiss_nonce,  $prefix.'_dismiss_nonce' ) && ! get_option( $this->dismiss ) ) {
 			update_option( $this->dismiss , time() , 'no');
@@ -143,15 +147,14 @@ class VARGAL_Admin_Recommend {
 					'slug' => 'exmage-wp-image-links',
 					'pro' => 'exmage-wordpress-image-links',
 					'name' => 'EXMAGE – WordPress Image Links',
-					'desc' => esc_html__( 'Save storage by using external image URLs. This plugin is required if you want to use external URLs(Temu cdn image URLs) for product featured image, gallery images and variation image.',
+					'desc' => esc_html__( 'Save storage by using external image and external video URLs. This plugin is required if you want to use external media URLs for product gallery',
 						'vargal-additional-variation-gallery-for-woo' ),
-					'message_not_install' => sprintf( "%s <strong>EXMAGE – WordPress Image Links</strong> %s </br> %s",
+					'message_not_install' => sprintf( "%s <strong>EXMAGE – WordPress Image Links</strong> %s",
 						esc_html__( 'Need to save your server storage?', 'vargal-additional-variation-gallery-for-woo' ),
-						esc_html__( 'will help you solve the problem by using external image URLs.', 'vargal-additional-variation-gallery-for-woo' ),
-						esc_html__( 'When this plugin is active, "Use external links for images" option will be available in the TMDS plugin settings/Product which allows to use original Temu product image URLs for featured image, gallery images and variation image of imported Temu products.', 'vargal-additional-variation-gallery-for-woo' )
+						esc_html__( 'will help you solve the problem by using external image and external video URLs.', 'vargal-additional-variation-gallery-for-woo' ),
 					),
 					'message_not_active'  => sprintf( "<strong>EXMAGE – WordPress Image Links</strong> %s",
-						esc_html__( 'is currently inactive, external images added by this plugin(Post/product featured image, product gallery images...) will no longer work properly.', 'vargal-additional-variation-gallery-for-woo' ) ),
+						esc_html__( 'is currently inactive, external gallery added by this plugin will no longer work properly.', 'vargal-additional-variation-gallery-for-woo' ) ),
 				],
 				'product-variations-swatches-for-woocommerce'=> [
 					'slug' => 'product-variations-swatches-for-woocommerce',
@@ -160,7 +163,7 @@ class VARGAL_Admin_Recommend {
 					'desc' => esc_html__( 'Product Variations Swatches for WooCommerce is a professional plugin that allows you to show and select attributes for variation products. The plugin displays variation select options of the products under colors, buttons, images, variation images, radio so it helps the customers observe the products they need more visually, save time to find the wanted products than dropdown type for variations of a variable product.',
 						'vargal-additional-variation-gallery-for-woo' ),
 					'message_not_install' => sprintf( "%s <strong>Product Variations Swatches for WooCommerce</strong> %s",
-						esc_html__( 'Need a variations swatches plugin that works perfectly with TMDS?', 'vargal-additional-variation-gallery-for-woo' ),
+						esc_html__( 'Need a variations swatches plugin that works perfectly with VARGAL?', 'vargal-additional-variation-gallery-for-woo' ),
 						esc_html__( 'is what you need.', 'vargal-additional-variation-gallery-for-woo' ) ),
 					'message_not_active'  => sprintf( "<strong>Product Variations Swatches for WooCommerce</strong> %s",
 						esc_html__( 'is currently inactive, this prevents variable products from displaying beautifully.', 'vargal-additional-variation-gallery-for-woo' ) ),

@@ -3,7 +3,7 @@
  * Plugin Name: VARGAL - Additional Variation Gallery for Woo
  * Plugin URI: https://villatheme.com/extensions/vargal
  * Description: Easily set unlimited images or MP4/WebM videos for each WC product variation and display them when the customer selects
- * Version: 1.0.4
+ * Version: 1.0.5
  * Author: VillaTheme
  * Author URI: https://villatheme.com
  * License:           GPL v2 or later
@@ -13,7 +13,7 @@
  * Copyright 2025 VillaTheme.com. All rights reserved.
  * Tested up to: 6.8
  * WC requires at least: 7.0
- * WC tested up to: 10.0
+ * WC tested up to: 10.1
  * Requires PHP: 7.0
  * Requires at least: 5.0
  * Requires Plugins: woocommerce
@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'VARGAL_VERSION' ) ) {
-	define( 'VARGAL_VERSION', '1.0.4' );
+	define( 'VARGAL_VERSION', '1.0.5' );
 	define( 'VARGAL_NAME', 'VARGAL-Additional Variation Gallery for Woo' );
 	define( 'VARGAL_BASENAME', plugin_basename( __FILE__ ) );
 	define( 'VARGAL_DIR', plugin_dir_path( __FILE__ ) );
@@ -52,8 +52,8 @@ if ( ! class_exists( 'VARGAL_INIT' ) ) {
 			add_action( 'plugins_loaded', [ $this, 'check_environment' ] );
 		}
 
-		public function check_environment( $recent_activate = false ) {
-			if (defined('VARGALPRO_VERSION')){
+		public function check_environment( ) {
+			if ( defined( 'VARGALPRO_VERSION' ) ) {
 				return;
 			}
 			if ( ! class_exists( 'VillaTheme_Require_Environment' ) ) {
@@ -80,32 +80,33 @@ if ( ! class_exists( 'VARGAL_INIT' ) ) {
 			add_action( 'init', array( $this, 'init' ) );
 			add_filter( 'plugin_action_links_' . VARGAL_BASENAME, array( $this, 'settings_link' ) );
 		}
+
 		protected function includes() {
 			$files = array(
-				VARGAL_INCLUDES=>[
+				VARGAL_INCLUDES   => [
 					'file_name' => [
 						'support.php',
 						'data.php',
 					]
 				],
-				VARGAL_ADMIN=>[
+				VARGAL_ADMIN      => [
 					'class_prefix' => VARGAL_Admin_Class_Prefix,
-					'file_name' => [
+					'file_name'    => [
 						'settings.php',
 						'product.php',
 						'migrate.php',
 						'recommend.php',
 					]
 				],
-				VARGAL_FRONTEND=>[
+				VARGAL_FRONTEND   => [
 					'class_prefix' => VARGAL_Frontend_Class_Prefix,
-					'file_name' => [
+					'file_name'    => [
 						'frontend.php',
 					]
 				],
-				VARGAL_COMPATIBLE=>[
+				VARGAL_COMPATIBLE => [
 					'class_prefix' => VARGAL_Compatible_Class_Prefix,
-					'file_name' => [
+					'file_name'    => [
 						'flatsome.php',
 						'goya.php',
 						'woodmart.php',
@@ -115,19 +116,19 @@ if ( ! class_exists( 'VARGAL_INIT' ) ) {
 				],
 			);
 			foreach ( $files as $path => $items ) {
-				if (empty($items['file_name']) || !is_array($items['file_name'])){
+				if ( empty( $items['file_name'] ) || ! is_array( $items['file_name'] ) ) {
 					continue;
 				}
-				$class_prefix = $items['class_prefix']??'';
-				foreach ($items['file_name'] as $file_name){
-					$file = $path.'/'.$file_name;
-					if ( !file_exists( $file ) ) {
+				$class_prefix = $items['class_prefix'] ?? '';
+				foreach ( $items['file_name'] as $file_name ) {
+					$file = $path . '/' . $file_name;
+					if ( ! file_exists( $file ) ) {
 						continue;
 					}
 					require_once $file;
-					$ext_file  = pathinfo( $file);
-					$class_name = $ext_file['filename'] ??'';
-					if ($class_prefix){
+					$ext_file   = pathinfo( $file );
+					$class_name = $ext_file['filename'] ?? '';
+					if ( $class_prefix ) {
 						$class_name = preg_replace( '/\W/i', '_', $class_prefix . ucfirst( $class_name ) );
 					}
 					if ( $class_name && class_exists( $class_name ) ) {
@@ -136,15 +137,16 @@ if ( ! class_exists( 'VARGAL_INIT' ) ) {
 				}
 			}
 		}
+
 		public function init() {
 			$this->load_plugin_textdomain();
-			if ( class_exists( 'VillaTheme_Support' )) {
+			if ( class_exists( 'VillaTheme_Support' ) ) {
 				new VillaTheme_Support(
 					array(
 						'support'    => 'https://wordpress.org/support/plugin/vargal-additional-variation-gallery-for-woo/',
 						'docs'       => 'http://docs.villatheme.com/?item=vargal',
 						'review'     => 'https://wordpress.org/support/plugin/vargal-additional-variation-gallery-for-woo/reviews/?rate=5#rate-response',
-						'pro_url'    => '',
+						'pro_url'    => 'https://1.envato.market/RGXJKa',
 						'css'        => VARGAL_CSS,
 						'image'      => VARGAL_IMAGES,
 						'slug'       => 'vargal-additional-variation-gallery-for-woo',
@@ -155,6 +157,7 @@ if ( ! class_exists( 'VARGAL_INIT' ) ) {
 				);
 			}
 		}
+
 		public function load_plugin_textdomain() {
 			/**
 			 * load Language translate
@@ -162,14 +165,17 @@ if ( ! class_exists( 'VARGAL_INIT' ) ) {
 			$locale = apply_filters( 'plugin_locale', get_locale(), 'vargal-additional-variation-gallery-for-woo' );
 			load_textdomain( 'vargal-additional-variation-gallery-for-woo', VARGAL_LANGUAGES . "vargal-additional-variation-gallery-for-woo-$locale.mo" );
 		}
+
 		public function settings_link( $links ) {
 			$settings_link = sprintf( '<a href="%s" title="%s">%s</a>', esc_attr( admin_url( 'admin.php?page=vargal' ) ),
 				esc_attr__( 'Settings', 'vargal-additional-variation-gallery-for-woo' ),
-				esc_html__( 'Settings', 'vargal-additional-variation-gallery-for-woo'  )
+				esc_html__( 'Settings', 'vargal-additional-variation-gallery-for-woo' )
 			);
 			array_unshift( $links, $settings_link );
+
 			return $links;
 		}
+
 		public function before_woocommerce_init( $links ) {
 			if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
 				\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );

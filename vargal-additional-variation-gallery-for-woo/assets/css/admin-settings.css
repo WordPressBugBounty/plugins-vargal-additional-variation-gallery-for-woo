@@ -10,6 +10,9 @@
 .wrap .vi-ui .vargal-basic-label {
   font-weight: 400;
 }
+.wrap .vi-ui .vargal-general-settings-wrap {
+  align-items: center;
+}
 .wrap .vi-ui .vagal-loading-icon-preview {
   position: relative;
   z-index: 1;

@@ -72,12 +72,36 @@ class VARGAL_DATA {
 			'1'=>__('Zoom', 'vargal-additional-variation-gallery-for-woo'),
 		];
 	}
+	public function get_img_transiton_options_pro(){
+		return [
+			'2'     => esc_html__( 'Zoomout', 'vargal-additional-variation-gallery-for-woo' ),
+			'3'     => esc_html__( 'Bubble', 'vargal-additional-variation-gallery-for-woo' ),
+			'4'     => esc_html__( 'Blur', 'vargal-additional-variation-gallery-for-woo' ),
+			'5'     => esc_html__( 'Circle', 'vargal-additional-variation-gallery-for-woo' ),
+			'6'     => esc_html__( 'Mask', 'vargal-additional-variation-gallery-for-woo' ),
+			'7'     => esc_html__( 'Rotateup', 'vargal-additional-variation-gallery-for-woo' ),
+			'8'     => esc_html__( 'Rotatedown', 'vargal-additional-variation-gallery-for-woo' ),
+			'9'     => esc_html__( 'Split', 'vargal-additional-variation-gallery-for-woo' ),
+			'10'    => esc_html__( 'Split 2', 'vargal-additional-variation-gallery-for-woo' ),
+			'11'    => esc_html__( 'Split 3', 'vargal-additional-variation-gallery-for-woo' ),
+		];
+	}
 	public function get_navigation_pos_options(){
 		return [
 			'0'=>__('None', 'vargal-additional-variation-gallery-for-woo'),
 			'center'=>__('Center', 'vargal-additional-variation-gallery-for-woo'),
 			'top'=>__('Top', 'vargal-additional-variation-gallery-for-woo'),
 			'bottom'=>__('Bottom', 'vargal-additional-variation-gallery-for-woo'),
+		];
+	}
+	public function get_navigation_pos_options_pro(){
+		return [
+			'center_left'  => esc_html__( 'Center left', 'vargal-additional-variation-gallery-for-woo' ),
+			'center_right' => esc_html__( 'Center right', 'vargal-additional-variation-gallery-for-woo' ),
+			'top_left'     => esc_html__( 'Top left', 'vargal-additional-variation-gallery-for-woo' ),
+			'top_right'    => esc_html__( 'Top right', 'vargal-additional-variation-gallery-for-woo' ),
+			'bottom_left'  => esc_html__( 'Bottom left', 'vargal-additional-variation-gallery-for-woo' ),
+			'bottom_right' => esc_html__( 'Bottom right', 'vargal-additional-variation-gallery-for-woo' ),
 		];
 	}
 	/**
@@ -92,21 +116,17 @@ class VARGAL_DATA {
 		$tags = array_merge_recursive( $tags, wp_kses_allowed_html( 'post' ), array(
 			'input'  => array(
 				'type'         => 1,
-				'id'           => 1,
 				'name'         => 1,
-				'class'        => 1,
 				'placeholder'  => 1,
 				'autocomplete' => 1,
-				'step'        => 1,
-				'min'        => 1,
-				'max'        => 1,
-				'style'        => 1,
+				'step'         => 1,
+				'min'          => 1,
+				'max'          => 1,
 				'value'        => 1,
 				'size'         => 1,
 				'checked'      => 1,
 				'disabled'     => 1,
 				'readonly'     => 1,
-				'data-*'       => 1,
 			),
 			'form'   => array(
 				'method' => 1,
@@ -119,12 +139,11 @@ class VARGAL_DATA {
 			'option' => array(
 				'value'    => 1,
 				'selected' => 1,
-				'disabled'     => 1,
+				'disabled' => 1,
 			),
 			'style'  => array(
-				'id'    => 1,
-				'class' => 1,
-				'type'  => 1,
+				'id'   => 1,
+				'type' => 1,
 			),
 			'source' => array(
 				'type' => 1,
@@ -143,21 +162,22 @@ class VARGAL_DATA {
 				'src'             => 1
 			),
 		) );
-		$tmp = $tags;
+		$tmp  = $tags;
 		foreach ( $tmp as $key => $value ) {
 			$tags[ $key ] = wp_parse_args( [
-				'width'  => 1,
-				'height' => 1,
-				'class'  => 1,
-				'id'     => 1,
-				'type'   => 1,
-				'style'  => 1,
-				'data-*' => 1,
+				'width'         => 1,
+				'height'        => 1,
+				'class'         => 1,
+				'id'            => 1,
+				'type'          => 1,
+				'style'         => 1,
+				'data-*'        => 1,
 				'fetchpriority' => 1,
-				'loading' => 1,
-			],$value);
+				'loading'       => 1,
+			], $value );
 		}
-		self::$allow_html = apply_filters('vargal_filter_allowed_html',$tags);
+		self::$allow_html = apply_filters( 'vargal_filter_allowed_html', $tags );
+
 		return self::$allow_html;
 	}
 	public static function implode_html_attributes( $raw_attributes ) {
@@ -203,7 +223,7 @@ class VARGAL_DATA {
 		}
 		switch ( $type ) {
 			case 'premium_option':
-				printf('<a class="vi-ui button" href="premium_option_url"
+				printf('<a class="vi-ui button vargal-basic-label" href="https://1.envato.market/RGXJKa"
                                        target="_blank">%s</a>', esc_html__( 'Unlock This Feature', 'vargal-additional-variation-gallery-for-woo' ));
 				break;
 			case 'radio':
@@ -238,11 +258,18 @@ class VARGAL_DATA {
 					$custom_attributes['class'] .=' search';
 				}
 				echo wp_kses( sprintf( '<select %s>', self::implode_html_attributes( $custom_attributes ) ), self::filter_allowed_html() );
-				if ( is_array( $select_options ) && count( $select_options ) ) {
+				if ( is_array( $select_options ) && !empty( $select_options ) ) {
 					foreach ( $select_options as $k => $v ) {
 						$selected = $multiple ? in_array( $k, $value ) : ( $k == $value );
 						echo wp_kses( sprintf( '<option value="%s" %s>%s</option>',
 							$k, $selected ? 'selected' : '', $v ), self::filter_allowed_html() );
+					}
+				}
+				$pro_options = $field['pro_options'] ??'';
+				if ( is_array( $pro_options ) && !empty( $select_options ) ) {
+					foreach ( $pro_options as $k => $v ) {
+						echo wp_kses( sprintf( '<option disabled>%s</option>',
+							$v.__(' - Premium version only', 'vargal-additional-variation-gallery-for-woo') ), self::filter_allowed_html() );
 					}
 				}
 				printf( '</select>' );
