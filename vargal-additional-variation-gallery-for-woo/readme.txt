@@ -107,11 +107,11 @@ All features from the free version.
 
 &#9658; **More navigation position such as center left, center right, top left,...**
 
-&#9658; **More navigation styles available, and you can design your own **
+&#9658; **More navigation styles available, and you can design your own**
 
-&#9658; **Show navigation dot **
+&#9658; **Show navigation dot**
 
-&#9658; **You can design the lightbox **
+&#9658; **You can design the lightbox**
 
 &#9658; **Create beautiful thumbnails**: The number of thumbnails will be automatically adjusted so their total size aligns with the slide gallery size
 
