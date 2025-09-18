@@ -26,7 +26,7 @@ Introducing VARGAL – Additional Variation Gallery for WooCommerce. Your all-in
 - Customize loading icons with different styles and colors
 - Migrate from other gallery plugins with ease
 
->[Try the Demo](http://new2new.com/?item=vargal "Demo VARGAL") |[Documents](https://docs.villatheme.com/?item=vargal "Documents") | [Facebook group](https://www.facebook.com/groups/villatheme "VillaTheme")
+>[Try the Demo](http://new2new.com/?item=vargal "Demo VARGAL") |[Documents](https://docs.villatheme.com/?item=vargal "Documents") |  [Pro Version](https://1.envato.market/RGXJKa "Pro Version") | [Facebook group](https://www.facebook.com/groups/villatheme "VillaTheme")
 
 ###Preview
 [youtube https://youtu.be/jKh8X88WV4k]
@@ -44,7 +44,7 @@ Introducing VARGAL – Additional Variation Gallery for WooCommerce. Your all-in
 
 &#9658; **Dedicated Additional Variation Gallery**:Highlight every variation with its own gallery. VARGAL allows you to go beyond WooCommerce’s single gallery system. With VARGAL, every variation of a product can have its own collection of media, including
 
-- Add multiple items at once – Save your time!
+- Add multiple items at once – Save your time
 
 - Images and Videos: Upload both image and video files to your variation gallery. Give shoppers a full view of what each variation looks like in action.
 
@@ -115,10 +115,8 @@ All features from the free version.
 
 &#9658; **Create beautiful thumbnails**: The number of thumbnails will be automatically adjusted so their total size aligns with the slide gallery size
 
-### 3rd party libraries & service
-- We also suggest products that can be integrated with this plugin to enhance the WooCommerce site design by including images & links to some of our plugins from the following lists:
-&#9658; [VillaTheme's suggested plugin](https://profiles.wordpress.org/villatheme/#content-plugins), [WP policy](https://codex.wordpress.org/WordPress_Policies), [VillaTheme policy](https://villatheme.com/privacy-policy/)
 
+&#9658; [GET PREMIUM VERSION NOW](https://1.envato.market/RGXJKa)
 
 ### Documentation
 
@@ -129,6 +127,10 @@ All features from the free version.
 - [Project Page](https://villatheme.com/extensions/vargal)
 - [Documentation](http://docs.villatheme.com/?item=vargal)
 - [Report Bugs/Issues](https://villatheme.com/knowledge-base/security-is-our-priority/)
+
+### 3rd party libraries & service
+- We also suggest products that can be integrated with this plugin to enhance the WooCommerce site design by including images & links to some of our plugins from the following lists:
+&#9658; [VillaTheme's suggested plugin](https://profiles.wordpress.org/villatheme/#content-plugins), [WP policy](https://codex.wordpress.org/WordPress_Policies), [VillaTheme policy](https://villatheme.com/privacy-policy/)
 
 ### MAY BE YOU NEED
 
@@ -257,6 +259,9 @@ All features from the free version.
 6. Show gallery with top thumbnails
 
 == Changelog ==
+/*1.0.6 - 2025.09.18*/
+- Updated: Compatible with BULKY - Bulk Edit Products for WooCommerce
+
 /*1.0.5 - 2025.09.03*/
 -Updated: Link to pro version
 

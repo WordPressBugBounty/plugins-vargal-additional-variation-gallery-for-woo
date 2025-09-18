@@ -3,7 +3,7 @@
  * Plugin Name: VARGAL - Additional Variation Gallery for Woo
  * Plugin URI: https://villatheme.com/extensions/vargal
  * Description: Easily set unlimited images or MP4/WebM videos for each WC product variation and display them when the customer selects
- * Version: 1.0.5
+ * Version: 1.0.6
  * Author: VillaTheme
  * Author URI: https://villatheme.com
  * License:           GPL v2 or later
@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'VARGAL_VERSION' ) ) {
-	define( 'VARGAL_VERSION', '1.0.5' );
+	define( 'VARGAL_VERSION', '1.0.6' );
 	define( 'VARGAL_NAME', 'VARGAL-Additional Variation Gallery for Woo' );
 	define( 'VARGAL_BASENAME', plugin_basename( __FILE__ ) );
 	define( 'VARGAL_DIR', plugin_dir_path( __FILE__ ) );
