@@ -289,6 +289,13 @@ class VARGAL_Admin_Settings {
 		        'options'  => self::$settings->get_navigation_pos_options(),
 		        'pro_options'  =>self::$settings->get_navigation_pos_options_pro() ,
 	        ],
+            'navigation_mobile_pos' => [
+                    'type'    => 'checkbox',
+                    'value'   => self::$settings->get_params( 'navigation_mobile_pos' ),
+                    'title'   => esc_html__( 'Show navigation on mobile', 'vargal-additional-variation-gallery-for-woo' ),
+                    'desc'    => esc_html__( 'Show the image switch icon for the gallery on mobile', 'vargal-additional-variation-gallery-for-woo' ),
+                    'wrap_class'    => 'vagarl-navigation-design-wrap',
+            ],
 	        'nav_design'                => [
 		        'type'   => 'premium_option',
 		        'title'  => esc_html__( 'Navigation design', 'vargal-additional-variation-gallery-for-woo' ),

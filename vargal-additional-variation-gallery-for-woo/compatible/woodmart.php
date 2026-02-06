@@ -17,7 +17,13 @@ class VARGAL_Compatible_Woodmart {
 		if (self::$settings->get_params('override_template')){
 			add_filter( 'woocommerce_single_product_image_gallery_classes', array( $this, 'add_vargal_class_wrap' ),10,1 );
 		}
-
+		add_filter( 'vargal_get_thumbnail_width', [$this,'vargal_get_thumbnail_width'],10,1);
+	}
+	public function vargal_get_thumbnail_width($result) {
+		if (self::theme_active() ) {
+			$result = 100;
+		}
+		return $result;
 	}
 	public function variation_gallery_settings($opt, $slug){
 //		if (!is_admin() && $slug === 'variation_gallery'){
@@ -53,6 +59,6 @@ class VARGAL_Compatible_Woodmart {
 		wp_enqueue_script('vargal-woodmart-frontend');
 	}
 	public static function theme_active(){
-		return defined('WOODMART_THEME_DIR');
+		return defined('WOODMART_THEME_DIR')||in_array( wp_get_theme()->get_stylesheet(), [ 'woodmart', 'woodmart-child' ] );
 	}
 }

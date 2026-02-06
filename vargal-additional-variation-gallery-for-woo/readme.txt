@@ -4,7 +4,7 @@ Donate link: http://www.villatheme.com/donate
 Tags: woocommerce, variation gallery for woocommerce, woocommerce variation gallery, gallery
 Requires at least: 5.0
 Requires PHP: 7.0
-Tested up to: 6.8
+Tested up to: 6.9
 Stable tag: trunk
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -115,7 +115,6 @@ All features from the free version.
 
 &#9658; **Create beautiful thumbnails**: The number of thumbnails will be automatically adjusted so their total size aligns with the slide gallery size
 
-
 &#9658; [GET PREMIUM VERSION NOW](https://1.envato.market/RGXJKa)
 
 ### Documentation
@@ -168,7 +167,7 @@ All features from the free version.
 
 [Coupon Box for WooCommerce](https://wordpress.org/plugins/woo-coupon-box/)
 
-[CURCY - Multi Currency for WooCommerce - The best free currency exchange plugin - Run smoothly on WooCommerce 9.x](https://wordpress.org/plugins/woo-multi-currency/)
+[CURCY - Multi Currency for WooCommerce - Smoothly on WooCommerce 9.x](https://wordpress.org/plugins/woo-multi-currency/)
 
 [Customer Coupons for WooCommerce](https://wordpress.org/plugins/woo-customer-coupons/)
 
@@ -202,6 +201,8 @@ All features from the free version.
 
 [Lucky Wheel for WooCommerce - Spin a Sale](https://wordpress.org/plugins/woo-lucky-wheel/)
 
+[Lucky Wheel Giveaway](https://wordpress.org/plugins/wp-lucky-wheel/)
+
 [Notification for WooCommerce | Boost Your Sales - Recent Sales Popup - Live Feed Sales - Upsells](https://wordpress.org/plugins/woo-notification/)
 
 [Orders Tracking for WooCommerce](https://wordpress.org/plugins/woo-orders-tracking/)
@@ -210,9 +211,9 @@ All features from the free version.
 
 [Pofily - WooCommerce Product Filters](https://wordpress.org/plugins/pofily-woo-product-filters/)
 
-[Product Builder for WooCommerce - Custom PC Builder](https://wordpress.org/plugins/woo-product-builder/)
+[PRENA - Product Pre-Orders for WooCommerce](https://wordpress.org/plugins/product-pre-orders-for-woo/)
 
-[Product Pre-Orders for WooCommerce](https://wordpress.org/plugins/product-pre-orders-for-woo/)
+[Product Builder for WooCommerce - Custom PC Builder](https://wordpress.org/plugins/woo-product-builder/)
 
 [Product Size Chart For WooCommerce](https://wordpress.org/plugins/product-size-chart-for-woo/)
 
@@ -234,11 +235,15 @@ All features from the free version.
 
 [TMDS - Dropshipping for TEMU and Woo](https://wordpress.org/plugins/tmds-dropshipping-for-temu-and-woo/)
 
+[VARGAL - Additional Variation Gallery for WooCommerce](https://wordpress.org/plugins/vargal-additional-variation-gallery-for-woo/)
+
+[VIMA - Multi Customer Addresses for Woo](https://wordpress.org/plugins/vima-multi-customer-addresses-for-woo/)
+
+[VISeek - Easy Custom Search](https://wordpress.org/plugins/viseek-easy-custom-search/)
+
 [W2S - Migrate WooCommerce to Shopify](https://wordpress.org/plugins/w2s-migrate-woo-to-shopify/)
 
 [WebPOS – Point of Sale for WooCommerce](https://wordpress.org/plugins/webpos-point-of-sale-for-woocommerce/)
-
-[WordPress Lucky Wheel - Spin a Sale](https://wordpress.org/plugins/wp-lucky-wheel/)
 
 [WPBulky - WordPress Bulk Edit Post Types](https://wordpress.org/plugins/wpbulky-wp-bulk-edit-post-types/)
 
@@ -259,6 +264,16 @@ All features from the free version.
 6. Show gallery with top thumbnails
 
 == Changelog ==
+/*1.0.8 - 2026.01.05*/
+- Updated: VillaTheme support
+
+/*1.0.7 - 2025.11.15*/
+- Updated: Swipe through gallery items of the VARGAL template on mobile
+- Updated: Option to show the image switch icon for the gallery on mobile
+- Updated: Compatible with Bricks theme v:2.0.2
+- Updated: Compatible with Blocksy theme
+- Added: The ‘vargal_get_thumbnail_width’ filter for adjusting thumbnail width
+
 /*1.0.6 - 2025.09.18*/
 - Updated: Compatible with BULKY - Bulk Edit Products for WooCommerce
 

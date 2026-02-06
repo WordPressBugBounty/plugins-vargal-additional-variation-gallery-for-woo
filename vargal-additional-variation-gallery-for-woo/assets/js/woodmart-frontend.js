@@ -9,7 +9,6 @@
     if (typeof woodmartThemeModule === 'undefined') {
         return;
     }
-    vargal_params.thumbnail_width = 100;
     vargal_params.woodmart_default_product_gallery = {};
     vargal_params.woodmart_default_product_gallery_thumb = {};
     if (vargal_params.override_template){

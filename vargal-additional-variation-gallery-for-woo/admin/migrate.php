@@ -34,10 +34,17 @@ class VARGAL_Admin_Migrate {
                 'variation_image_gallery'=>'WooThumbs for WooCommerce - by Iconic',
                 'rtwpvg_images'=>'Variation Images Gallery for WooCommerce - by RadiusTheme',
         ];
-        if (in_array(wp_get_theme()->get_stylesheet(),['woodmart','woodmart-child'])){
-            $selected='wd_additional_variation_images_data';
-            $options['wd_additional_variation_images_data'] = 'WoodMart theme';
-        }
+		$themes = wp_get_themes();
+		foreach ($themes as $theme) {
+            $slug = $theme->get_stylesheet();
+			if (!isset($options['wd_additional_variation_images_data']) && in_array($slug,['woodmart','woodmart-child'])){
+				$options['wd_additional_variation_images_data'] = 'WoodMart theme';
+                continue;
+			}
+			if (!isset($options['blocksy_post_meta_options']) && in_array($slug,['blocksy','blocksy-child'])){
+				$options['blocksy_post_meta_options'] = 'Blocksy theme';
+			}
+		}
 		?>
 		<div class="wrap vargal-migrate-wrap">
 			<h2><?php esc_html_e( 'Migrate Variation Gallery', 'vargal-additional-variation-gallery-for-woo' ) ?></h2>
@@ -71,7 +78,7 @@ class VARGAL_Admin_Migrate {
 									<label for="vargal-source"><?php esc_html_e( 'Variation Gallery Source', 'vargal-additional-variation-gallery-for-woo' ) ?></label>
 								</th>
 								<td>
-									<select name="source" id="vargal-source" class="vargal-source vi-ui dropdown fluid">
+									<select name="source" id="vargal-source" class="vargal-source vi-ui dropdown search fluid">
 										<?php
                                         foreach ($options as $k => $v){
                                             ?>
@@ -205,6 +212,7 @@ class VARGAL_Admin_Migrate {
         }
 	    add_filter( 'woocommerce_product_data_store_cpt_get_products_query', [ $this, 'product_data_store_cpt_get_products_query' ], 10, 2 );
 	    $woo_ids = wc_get_products($args);
+        remove_filter('woocommerce_product_data_store_cpt_get_products_query', [ $this, 'product_data_store_cpt_get_products_query' ]);
 	    if ($page=== 1){
 		    $max_page = $woo_ids->max_num_pages ?? 1;
 		    $woo_ids = $woo_ids->products;
@@ -215,7 +223,7 @@ class VARGAL_Admin_Migrate {
 	    if (is_array($woo_ids) && !empty($woo_ids)){
 		    foreach ( $woo_ids as $woo_id ) {
                 $product = wc_get_product($woo_id);
-			    $old_gallery = $product->get_meta($meta_key);
+			    $old_gallery = apply_filters('vargal_migrate_get_old_gallery_data',$product->get_meta($meta_key), $meta_key, $product);
                 if (!empty($old_gallery)){
                     if (!is_array($old_gallery)){
 	                    $old_gallery = explode( ',', $old_gallery ) ;

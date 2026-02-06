@@ -3,9 +3,6 @@
     if (typeof vargal_params === "undefined") {
         return;
     }
-    if (typeof wc_single_product_params === 'undefined') {
-        return;
-    }
     window.vargal_mobile_check = function () {
         let check = false;
         (function (a) {
@@ -13,12 +10,17 @@
         })(navigator.userAgent || navigator.vendor || window.opera);
         return check;
     };
-    let is_mobile,thumnails_pos;
+    let is_mobile,thumnails_pos,navigation_pos;
     window.vargal_define_params = function () {
         if (vargal_params.override_template){
             is_mobile = vargal_mobile_check();
             thumnails_pos = is_mobile ? vargal_params?.thumbnail_mobile_pos : vargal_params?.thumbnail_pos;
             vargal_params.current_thumbnail_pos = thumnails_pos;
+            navigation_pos = vargal_params?.navigation_pos;
+            if (is_mobile && !vargal_params?.navigation_mobile_pos){
+                navigation_pos = '';
+            }
+            vargal_params.current_navigation_pos = navigation_pos;
             if (vargal_params?.zoom){
                 wc_single_product_params.zoom_enabled = true;
             }else {
@@ -38,7 +40,7 @@
             }else {
                 wc_single_product_params.flexslider.slideshow = false;
             }
-            if (vargal_params?.navigation_pos){
+            if (vargal_params?.current_navigation_pos){
                 wc_single_product_params.flexslider.directionNav = true;
             }else {
                 wc_single_product_params.flexslider.directionNav = false;
@@ -49,21 +51,42 @@
                 wc_single_product_params.flexslider.controlNav = true;
                 wc_single_product_params.flexslider.manualControls = '.vargal-control-nav li a';
             }
-            if (wc_single_product_params.flexslider.directionNav && vargal_params.current_thumbnail_pos ) {
-                wc_single_product_params.flexslider.touch = false;
-            }
+            // if (wc_single_product_params.flexslider.directionNav && vargal_params.current_thumbnail_pos ) {
+            //     // wc_single_product_params.flexslider.touch = false;
+            // }
         }
     };
     vargal_params.current_thumbnail_pos ='';
-    setTimeout(function () {
-        if (typeof is_mobile === "undefined"){
-            $(document).trigger('vargal_defined_params');
-        }
-    },20);
-    vargal_params.thumbnail_width = 70;
+    if (!vargal_params?.thumbnail_width || !parseFloat(vargal_params.thumbnail_width)) {
+        vargal_params.thumbnail_width = 70;
+    }
     vargal_params.default_product_main = {};
     vargal_params.default_product_gallery = {};
     vargal_params.gallery_is_changing = {};
+    setTimeout(function () {
+        if (typeof is_mobile === "undefined" && typeof wc_single_product_params !== 'undefined') {
+            $(document).trigger('vargal_defined_params');
+        }
+    },20);
+    vargal_params.get_default_product_main = function (gallery) {
+        let $gallery = $(gallery), img;
+        img = $gallery.find('.wp-post-image').closest('.woocommerce-product-gallery__image').clone();
+        if (img.data('src')) {
+            img.attr('src', img.data('src'));
+        }
+        return img;
+    }
+    vargal_params.get_default_product_gallery = function (gallery) {
+        let $gallery = $(gallery), imgs;
+        imgs = $gallery.find('.woocommerce-product-gallery__image').clone();
+        $.each(imgs, function (k, v) {
+            let $img = $(v).find('img');
+            if ($img.length && $img.data('src')) {
+                $(imgs[k]).find('img').attr('src', $img.data('src'));
+            }
+        });
+        return imgs;
+    }
     function handlePswpTrapFocus( e ) {
         let allFocusablesEls      = e.currentTarget.querySelectorAll( 'button:not([disabled])' );
         let filteredFocusablesEls = Array.from( allFocusablesEls ).filter( function( btn ) {
@@ -123,11 +146,13 @@
         }
         $gallery.data('vargal_product_id',product_id);
         if (typeof vargal_params.default_product_gallery[product_id] === "undefined") {
-            vargal_params.default_product_gallery[product_id] =$gallery.find('.woocommerce-product-gallery__image').clone();
+            // vargal_params.default_product_gallery[product_id] =$gallery.find('.woocommerce-product-gallery__image').clone();
+            vargal_params.default_product_gallery[product_id] = vargal_params.get_default_product_gallery($gallery);
             // vargal_params.default_product_gallery[product_id] = $('.woocommerce-product-gallery__image', $gallery).clone();
         }
         if (typeof vargal_params.default_product_main[product_id] === "undefined") {
-            vargal_params.default_product_main[product_id] = $gallery.find('.wp-post-image').closest('.woocommerce-product-gallery__image').clone();
+            vargal_params.default_product_main[product_id] = vargal_params.get_default_product_main($gallery);
+            // vargal_params.default_product_main[product_id] = $gallery.find('.wp-post-image').closest('.woocommerce-product-gallery__image').clone();
         }
         if ($gallery.hasClass('vargal-product-gallery-wrap')) {
             let tmp_width = $gallery.outerWidth();
@@ -149,8 +174,8 @@
             if (vargal_params?.transition){
                 $gallery.addClass('vargal-product-gallery-wrap-transition-' + vargal_params.transition);
             }
-            if (vargal_params?.navigation_pos){
-                $gallery.addClass('vargal-product-gallery-wrap-nav-wrap vargal-product-gallery-wrap-nav-' + vargal_params.navigation_pos);
+            if (vargal_params?.current_navigation_pos){
+                $gallery.addClass('vargal-product-gallery-wrap-nav-wrap vargal-product-gallery-wrap-nav-' + vargal_params.current_navigation_pos);
             }
             if (vargal_params.current_thumbnail_pos) {
                 $gallery.addClass('vargal-product-gallery-wrap-' + vargal_params.current_thumbnail_pos);
@@ -306,7 +331,8 @@
             return;
         }
         if (typeof vargal_params.default_product_main[product_id] === "undefined") {
-            vargal_params.default_product_main[product_id] = $gallery.find('.wp-post-image').closest('.woocommerce-product-gallery__image').clone();
+            // vargal_params.default_product_main[product_id] = $gallery.find('.wp-post-image').closest('.woocommerce-product-gallery__image').clone();
+            vargal_params.default_product_main[product_id] = vargal_params.get_default_product_main($gallery);
         }
         let $tmp = '',  gallery_video = [];
         for (let i in gallery) {
@@ -589,10 +615,12 @@
         }
     });
     $(document).on('vargal-product-gallery-thumbnail-render',function (e, gallery, gallery_image){
+        console.log('render')
         let $gallery = $(gallery);
         if (!$gallery.length || !gallery_image.length){
             return;
         }
+        console.log('a1')
         let $tmp_thumbnails = '';
         for (let i=0; i < gallery_image.length; i++) {
             let $galleryElement = gallery_image.eq(i),
@@ -628,20 +656,19 @@
             $tmp_thumbnails += $html_t.html();
         }
         $gallery.find('.vargal-control-nav').append($tmp_thumbnails);
-        let item_width = vargal_params.thumbnail_width;
+        let item_width = parseFloat(vargal_params.thumbnail_width);
+        let tmp_width = $gallery.outerWidth() - (item_width + parseFloat(vargal_params.thumbnail_gap_with_main_img)) ;
         if (['left','right'].includes(vargal_params.current_thumbnail_pos)){
-            $gallery.find('.vargal-control-nav-wrap').css({'height': $gallery.width() + 'px','overflow':'hidden'});
+            $gallery.find('.vargal-control-nav-wrap').css({'height': tmp_width + 'px','overflow':'hidden'});
             $gallery.find('.vargal-product-gallery__wrapper').css({'width': 'calc( 100% - ' + ( item_width + parseFloat(vargal_params.thumbnail_gap_with_main_img) ) + 'px )'});
-        }
-        if (['left','right'].includes(vargal_params.current_thumbnail_pos)){
-            $gallery.find('.woocommerce-product-gallery__image').css({'max-width': ( $gallery.outerWidth() - (item_width + parseFloat(vargal_params.thumbnail_gap_with_main_img)) ) + 'px'});
+            $gallery.find('.woocommerce-product-gallery__image').css({'max-width': tmp_width + 'px'});
         }
         if (['top'].includes(vargal_params.current_thumbnail_pos)){
             $gallery.find('.vargal-control-nav-wrap').css({'max-height': item_width+'px'});
         }
-        $gallery.find('.vargal-control-nav li, .vargal-control-nav li a').css({'min-width': item_width+'px','max-width': item_width+'px','max-height': item_width+'px','overflow':'hidden'});
+        $gallery.find('.vargal-control-nav li, .vargal-control-nav li a').css({'min-width': item_width+'px','max-width': item_width+'px','max-height': item_width+'px','min-height': item_width + 'px'});
         if (vargal_params?.thumbnail_slide){
-            let item_margin= parseFloat(vargal_params.thumbnail_gap), wrap_width=$gallery.outerWidth();
+            let item_margin= parseFloat(vargal_params.thumbnail_gap), wrap_width=tmp_width;
             let max_item = Math.floor((wrap_width - item_width) / (item_width + item_margin)) + 1;
             let min_item = max_item - 1;
             if ($gallery.find('.vargal-control-nav-wrap li').length > max_item){
@@ -681,6 +708,25 @@
                                     thumb_click -= check_click;
                                 }
                                 $('#'+varal_thumb_class+'-css').html(`.${varal_thumb_class}{transform: translate3d(0px,${(-1*thumb_click*(item_width + item_margin))}px, 0px) !important;`);
+                            }
+                        },
+                        start: function (slider) {
+                            if (slider.visible != max_item && slider?.directionNav) {
+                                slider.itemW = item_width;
+                                slider.visible = max_item;
+                                slider.move = (slider.vars.move > 0 && slider.vars.move < slider.visible) ? slider.vars.move : slider.visible;
+                                slider.pagingCount = Math.ceil(((slider.count - slider.visible) / slider.move) + 1);
+                                slider.last = slider.pagingCount - 1;
+                                slider.limit = ((slider.itemW + item_margin) * slider.count) - slider.w - item_margin;
+                                slider.container.data('flexslider', slider);
+                                slider.container.closest('.vargal-control-nav-wrap').addClass('vargal-control-nav-override');
+                                if (slider?.directionNav) {
+                                    let namespace = slider.vars.namespace;
+                                    let disabledClass = namespace + 'disabled';
+                                    if (slider.animatingTo !== slider.last && slider.directionNav.filter('.' + disabledClass + '.' + namespace + "next").length) {
+                                        slider.directionNav.filter('.' + namespace + "next").removeClass(disabledClass).attr('tabindex', '-1');
+                                    }
+                                }
                             }
                         },
                         init: function (slider) {

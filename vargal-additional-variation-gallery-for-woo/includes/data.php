@@ -34,15 +34,16 @@ class VARGAL_DATA {
 			'auto_play_speed'                      => 5,
 			'transition'                      => 'slide',
 			'navigation_pos'                      => 'center',
+			'navigation_mobile_pos'            => 0,
 			'thumbnail'                      => 1,
 			'thumbnail_pos'                      => 'bottom',
 			'thumbnail_mobile_pos'                      => 'bottom',
 			'thumbnail_main_img'                      => '',
-			'thumbnail_default_enable'                      => 1,
+			'thumbnail_default_enable'                      => '',
 			'thumbnail_hover_change'                      => 1,
 			'thumbnail_gap'                      => 13,
 			'thumbnail_gap_with_main_img'                      => 15,
-			'thumbnail_slide'                      => '',
+			'thumbnail_slide'                      => 1,
 		);
 		if ( ! $vargal_params ) {
 			$vargal_params = get_option( 'vargal_params', array() );

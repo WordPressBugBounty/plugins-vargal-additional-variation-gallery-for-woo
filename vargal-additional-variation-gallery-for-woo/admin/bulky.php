@@ -59,10 +59,10 @@ class VARGALPRO_Compatible_Bulky {
 			);
 			self::$settings::enqueue_script( [ 'vargal-bulky-edit', 'villatheme-show-message' ], [ 'bulky-edit', 'villatheme-show-message' ] );
 			$arg = [
-				'duplicate_img_mes' => esc_html__( 'This file is selected before.', 'vargal-woocommerce-additional-variation-gallery' ),
-				'invalid_type_mes'  => esc_html__( 'Please select only images or videos to set the gallery.', 'vargal-woocommerce-additional-variation-gallery' ),
-				'browser_not_support' => esc_html__( 'This format is not supported, Please use another file.', 'vargal-woocommerce-additional-variation-gallery' ),
-				'invalid_video_mes' => esc_html__( 'Please select only videos in MP4 or WebM format.', 'vargal-woocommerce-additional-variation-gallery' ),
+				'duplicate_img_mes' => esc_html__( 'This file is selected before.', 'vargal-additional-variation-gallery-for-woo' ),
+				'invalid_type_mes'  => esc_html__( 'Please select only images or videos to set the gallery.', 'vargal-additional-variation-gallery-for-woo' ),
+				'browser_not_support' => esc_html__( 'This format is not supported, Please use another file.', 'vargal-additional-variation-gallery-for-woo' ),
+				'invalid_video_mes' => esc_html__( 'Please select only videos in MP4 or WebM format.', 'vargal-additional-variation-gallery-for-woo' ),
 			];
 			wp_localize_script( 'vargal-bulky-edit', 'vargal_params', $arg );
 		}

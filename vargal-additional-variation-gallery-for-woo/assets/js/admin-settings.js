@@ -19,6 +19,14 @@ jQuery(document).ready(function ($) {
     $(document).on('change','#vargal-loading_icon_type', function () {
         $(document).trigger('vargal-loading-preview');
     });
+    $(document).on('change', '.vargal-navigation_pos select', function () {
+        let val = $(this).val();
+        if (!val || val == '0') {
+            $('.vagarl-navigation-design-wrap').closest('tr').slideUp(200);
+        } else {
+            $('.vagarl-navigation-design-wrap').closest('tr').slideDown(200);
+        }
+    });
     $(document).on('vargal-loading-preview',function (){
         let type = $('#vargal-loading_icon_type').val(),
             color = $('.vargal-loading_icon_color').val(),

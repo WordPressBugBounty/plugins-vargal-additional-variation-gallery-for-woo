@@ -1,6 +1,6 @@
 jQuery(document).ready(function ($) {
     'use strict';
-    $('.vi-ui.dropdown:not(.vargal-dropdown-init)').addClass('vargal-dropdown-init').off().dropdown();
+    $('.vi-ui.dropdown:not(.vargal-dropdown-init)').addClass('vargal-dropdown-init').off().dropdown({ fullTextSearch: true});
     $(document).on('click', '.vargal-button-migrate',function () {
         let $button = $(this),
             $container = $button.closest('.vi-ui.segment'),

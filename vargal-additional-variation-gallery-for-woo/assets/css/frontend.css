@@ -57,6 +57,10 @@
   margin: 0;
   padding: 0;
 }
+.vargal-product-gallery ol li, .vargal-product-gallery ul li {
+  margin: 0;
+  padding: 0;
+}
 .vargal-product-gallery a:focus, .vargal-product-gallery a:focus-visible {
   outline: unset;
 }
@@ -214,6 +218,8 @@
 .vargal-product-gallery.vargal-product-gallery-wrap .vargal-control-nav-wrap:not(.vargal-control-nav-slider) .vargal-control-nav {
   display: inline-flex;
   flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
 }
 .vargal-product-gallery.vargal-product-gallery-wrap .vargal-control-nav-wrap:hover .vargal-control-nav-direction-nav li {
   opacity: 1;

@@ -39,50 +39,42 @@ class VARGAL_Admin_Recommend {
         $notices =[];
         $prefix = 'vargal';
 		foreach ( $recommended_plugins as $recommended_plugin ) {
-			$plugin_slug = $recommended_plugin['slug'];
+            $plugin_slug = $recommended_plugin['slug'];
             if (empty( $recommended_plugin['message_not_install'] ) && empty( $recommended_plugin['message_not_active'] )){
                 continue;
             }
-			if ( ! get_option( "{$this->dismiss}__{$plugin_slug}" ) ) {
-                $pro_install = false;
-				$button = '';
-				if ( ! empty( $recommended_plugin['pro'] )  ) {
-					$pro_file = "{$recommended_plugin['pro']}/{$recommended_plugin['pro']}.php";
-					if (isset($installed_plugins[$pro_file])) {
-                        $pro_install = true;
-	                    if ( ! empty( $recommended_plugin['message_not_active'] ) && ! isset($active_plugins[$recommended_plugin['pro']]) && ! isset($active_plugins[$plugin_slug] ) ){
-                            if (current_user_can( 'activate_plugin',$pro_file)) {
-	                            $button = sprintf( '<br><br> <a href="%s" target="_blank" class="button button-primary">%s %s</a>',
-		                            esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'activate', 'plugin' => $pro_file ), self_admin_url( 'plugins.php' ) ), "activate-plugin_{$pro_file}" ) ),
-		                            esc_html__( 'Activate', 'vargal-additional-variation-gallery-for-woo' ),
-		                            $recommended_plugin['name']);
-                            }
-                            $notices[]= $recommended_plugin['message_not_active'] . $button;
-	                    }
-                    }
-				}
-                if ($pro_install ){
-                    continue;
+            $button = '';
+            $pro_file =  ! empty( $recommended_plugin['pro'] )? "{$recommended_plugin['pro']}/{$recommended_plugin['pro']}.php":'';
+            $plugin_file = "{$plugin_slug}/{$plugin_slug}.php";
+            if ((!$pro_file || !isset($installed_plugins[$pro_file])) && !isset($installed_plugins[$plugin_file]) && ! empty( $recommended_plugin['message_not_install'] ) ){
+                if ( current_user_can( 'install_plugins' )  ) {
+                    $button = sprintf( '<br><br> <a href="%s" target="_blank" class="button button-primary">%s %s</a>',
+                            esc_url( wp_nonce_url( network_admin_url( "update.php?action=install-plugin&plugin={$plugin_slug}" ), "install-plugin_{$plugin_slug}" ) ),
+                            esc_html__( 'Install', 'vargal-additional-variation-gallery-for-woo' ),
+                            $recommended_plugin['name']);
                 }
-				$plugin_file = "{$plugin_slug}/{$plugin_slug}.php";
-				if ( !isset($installed_plugins[$plugin_file]) && ! empty( $recommended_plugin['message_not_install'] ) ){
-					if ( current_user_can( 'install_plugins' )  ) {
-						$button = sprintf( '<br><br> <a href="%s" target="_blank" class="button button-primary">%s %s</a>',
-							esc_url( wp_nonce_url( network_admin_url( "update.php?action=install-plugin&plugin={$plugin_slug}" ), "install-plugin_{$plugin_slug}" ) ),
-							esc_html__( 'Install', 'vargal-additional-variation-gallery-for-woo' ),
-							$recommended_plugin['name']);
-					}
-					$notices[] = $recommended_plugin['message_not_install']. $button;
-				}elseif ( ! empty( $recommended_plugin['message_not_active'] ) && ! isset($active_plugins[$plugin_slug] ) ){
-                    if ( current_user_can( 'activate_plugin', $plugin_file )) {
-	                    $button = sprintf( '<br><br> <a href="%s" target="_blank" class="button button-primary">%s %s</a>',
-		                    esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'activate', 'plugin' => $plugin_file ), self_admin_url( 'plugins.php' ) ), "activate-plugin_{$plugin_file}" ) ),
-		                    esc_html__( 'Activate', 'vargal-additional-variation-gallery-for-woo' ),
-		                    $recommended_plugin['name']);
+                $notices[] = $recommended_plugin['message_not_install']. $button;
+            }elseif ( ! empty( $recommended_plugin['message_not_active'] ) && ! isset($active_plugins[$plugin_slug] ) ) {
+                if ( isset( $installed_plugins[ $pro_file ] ) ) {
+                    if (! isset( $active_plugins[ $recommended_plugin['pro'] ] )) {
+                        if ( current_user_can( 'activate_plugin', $pro_file ) ) {
+                            $button = sprintf( '<br><br> <a href="%s" target="_blank" class="button button-primary">%s %s</a>',
+                                    esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'activate', 'plugin' => $pro_file ), self_admin_url( 'plugins.php' ) ), "activate-plugin_{$pro_file}" ) ),
+                                    esc_html__( 'Activate', 'vargal-additional-variation-gallery-for-woo' ),
+                                    $recommended_plugin['name'] );
+                        }
+                        $notices[] = $recommended_plugin['message_not_active'] . $button;
                     }
-					$notices[]= $recommended_plugin['message_not_active'] . $button;
-				}
-			}
+                } else {
+                    if ( current_user_can( 'activate_plugin', $plugin_file ) ) {
+                        $button = sprintf( '<br><br> <a href="%s" target="_blank" class="button button-primary">%s %s</a>',
+                                esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'activate', 'plugin' => $plugin_file ), self_admin_url( 'plugins.php' ) ), "activate-plugin_{$plugin_file}" ) ),
+                                esc_html__( 'Activate', 'vargal-additional-variation-gallery-for-woo' ),
+                                $recommended_plugin['name'] );
+                    }
+                    $notices[] = $recommended_plugin['message_not_active'] . $button;
+                }
+            }
 		}
         if (!empty($notices)){
             ?>
@@ -160,13 +152,13 @@ class VARGAL_Admin_Recommend {
 					'slug' => 'product-variations-swatches-for-woocommerce',
 					'pro' => 'woocommerce-product-variations-swatches',
 					'name' => 'Product Variations Swatches for WooCommerce',
-					'desc' => esc_html__( 'Product Variations Swatches for WooCommerce is a professional plugin that allows you to show and select attributes for variation products. The plugin displays variation select options of the products under colors, buttons, images, variation images, radio so it helps the customers observe the products they need more visually, save time to find the wanted products than dropdown type for variations of a variable product.',
+					'desc' => esc_html__( "Product Variations Swatches for WooCommerce replaces standard dropdowns with visual options like colors, buttons, and images, making it easier for customers to explore variations, choose faster, and shop with confidence",
 						'vargal-additional-variation-gallery-for-woo' ),
 					'message_not_install' => sprintf( "%s <strong>Product Variations Swatches for WooCommerce</strong> %s",
 						esc_html__( 'Need a variations swatches plugin that works perfectly with VARGAL?', 'vargal-additional-variation-gallery-for-woo' ),
 						esc_html__( 'is what you need.', 'vargal-additional-variation-gallery-for-woo' ) ),
 					'message_not_active'  => sprintf( "<strong>Product Variations Swatches for WooCommerce</strong> %s",
-						esc_html__( 'is currently inactive, this prevents variable products from displaying beautifully.', 'vargal-additional-variation-gallery-for-woo' ) ),
+						esc_html__( 'Swap standard dropdowns for visual options like colors, buttons, and images to help shoppers choose variations faster and with confidence.', 'vargal-additional-variation-gallery-for-woo' ) ),
 				],
 			];
 		}

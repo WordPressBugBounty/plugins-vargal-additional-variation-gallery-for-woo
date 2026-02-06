@@ -166,6 +166,7 @@ class VARGAL_Frontend_Frontend {
 				'thumbnail_main_img'=>self::$settings->get_params('thumbnail_main_img'),
 				'thumbnail_default_enable'=>self::$settings->get_params('thumbnail_default_enable'),
 				'navigation_pos'=>self::$settings->get_params('navigation_pos')?:'',
+				'navigation_mobile_pos'           => self::$settings->get_params( 'navigation_mobile_pos' ) ?: '',
 			];
 			if (self::$settings->get_params('thumbnail')){
 				$args +=[
@@ -175,6 +176,7 @@ class VARGAL_Frontend_Frontend {
 					'thumbnail_gap_with_main_img'=>self::$settings->get_params('thumbnail_gap_with_main_img'),
 					'thumbnail_gap'=>self::$settings->get_params('thumbnail_gap'),
 					'thumbnail_slide'=>self::$settings->get_params('thumbnail_slide'),
+					'thumbnail_width'            => apply_filters('vargal_get_thumbnail_width', 70),
 				];
 				$css .='.vargal-product-gallery.vargal-product-gallery-wrap{gap:'.esc_html($args['thumbnail_gap_with_main_img']).'px}';
 				$css .='.vargal-product-gallery.vargal-product-gallery-wrap .vargal-control-nav{gap:'.esc_html($args['thumbnail_gap']).'px}';
