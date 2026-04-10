@@ -5,6 +5,8 @@ Tags: woocommerce, variation gallery for woocommerce, woocommerce variation gall
 Requires at least: 5.0
 Requires PHP: 7.0
 Tested up to: 6.9
+WC requires at least: 7.0
+WC tested up to: 10.6
 Stable tag: trunk
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -264,6 +266,9 @@ All features from the free version.
 6. Show gallery with top thumbnails
 
 == Changelog ==
+/*1.1.0 - 2026.04.10*/
+- Updated: Optimize code
+
 /*1.0.8 - 2026.01.05*/
 - Updated: VillaTheme support
 

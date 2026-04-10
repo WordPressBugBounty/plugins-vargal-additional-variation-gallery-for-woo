@@ -169,21 +169,49 @@ class VARGAL_Admin_Migrate {
 		$localize_script = $menu_slug . '-admin-migrate';
 		wp_localize_script( $localize_script, $menu_slug . '_params', $params );
 	}
-    public function vargal_migrate_gallery(){
-	    $response = array(
-		    'status'         => 'error',
-		    'message' => '',
-		    'stop'    => '',
-	    );
-	    if ( !check_ajax_referer( 'vargal-migrate-gallery','_vargal_nonce', false )) {
-		    $result['message']='Invalid nonce';
-		    wp_send_json($result);
-	    }
-	    $meta_key = isset( $_POST['product_source_meta'] ) ? sanitize_text_field( wp_unslash($_POST['product_source_meta'] )) : '';
-	    if ( ! $meta_key ) {
-		    $response['message'] = __( 'Can not find the meta key that one can use to store the variation gallery.', 'vargal-additional-variation-gallery-for-woo' );
-		    wp_send_json( $response );
-	    }
+
+	/**
+	 * Allowed product meta keys for migration (must match select options in migrate UI).
+	 *
+	 * @return array
+	 */
+	private function get_allowed_migrate_meta_keys() {
+		$keys = array(
+			'_wc_additional_variation_images',
+			'wavi_value',
+			'woo_variation_gallery_images',
+			'_product_image_gallery',
+			'variation_image_gallery',
+			'rtwpvg_images',
+			'wd_additional_variation_images_data',
+			'blocksy_post_meta_options',
+		);
+
+		return apply_filters( 'vargal_migrate_allowed_meta_keys', $keys );
+	}
+
+	public function vargal_migrate_gallery() {
+		$response = array(
+			'status'  => 'error',
+			'message' => '',
+			'stop'    => '',
+		);
+		if ( ! check_ajax_referer( 'vargal-migrate-gallery', '_vargal_nonce', false ) ) {
+			$response['message'] = esc_html__( 'Invalid security token. Please reload the page and try again.', 'vargal-additional-variation-gallery-for-woo' );
+			wp_send_json( $response );
+		}
+		$menu_slug = self::$settings::$prefix;
+		$cap       = apply_filters( "villatheme_{$menu_slug}_admin_sub_menu_capability", 'manage_woocommerce', "{$menu_slug}-migrate" );
+		if ( ! current_user_can( $cap ) ) {
+			$response['message'] = esc_html__( 'You do not have permission to run this action.', 'vargal-additional-variation-gallery-for-woo' );
+			wp_send_json( $response );
+		}
+		$meta_key = isset( $_POST['product_source_meta'] ) ? sanitize_text_field( wp_unslash( $_POST['product_source_meta'] ) ) : '';
+		$allowed  = $this->get_allowed_migrate_meta_keys();
+		if ( ! $meta_key || ! in_array( $meta_key, $allowed, true ) ) {
+			$response['message'] = esc_html__( 'Can not find the meta key that one can use to store the variation gallery.', 'vargal-additional-variation-gallery-for-woo' );
+			wp_send_json( $response );
+		}
 	    VARGAL_DATA::villatheme_set_time_limit();
 	    $page             = isset( $_POST['page'] ) ? absint( sanitize_text_field( wp_unslash( $_POST['page'] )) ) : 1;
 	    $max_page         = isset( $_POST['max_page'] ) ? absint( sanitize_text_field(wp_unslash( $_POST['max_page'] )) ) : 1;
@@ -220,10 +248,13 @@ class VARGAL_Admin_Migrate {
 		    printf( wp_kses_post('Migration of the variation gallery data from: %s ' ) , esc_attr($meta_key) );
 		    $this->wc_log(ob_get_clean() ,'migrate-gallery');
 	    }
-	    if (is_array($woo_ids) && !empty($woo_ids)){
-		    foreach ( $woo_ids as $woo_id ) {
-                $product = wc_get_product($woo_id);
-			    $old_gallery = apply_filters('vargal_migrate_get_old_gallery_data',$product->get_meta($meta_key), $meta_key, $product);
+		if ( is_array( $woo_ids ) && ! empty( $woo_ids ) ) {
+			foreach ( $woo_ids as $woo_id ) {
+				$product = wc_get_product( $woo_id );
+				if ( ! $product ) {
+					continue;
+				}
+				$old_gallery = apply_filters( 'vargal_migrate_get_old_gallery_data', $product->get_meta( $meta_key ), $meta_key, $product );
                 if (!empty($old_gallery)){
                     if (!is_array($old_gallery)){
 	                    $old_gallery = explode( ',', $old_gallery ) ;

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: VARGAL - Additional Variation Gallery for Woo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-05 02:25+0000\n"
+"POT-Creation-Date: 2026-04-07 07:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -90,7 +90,7 @@ msgstr ""
 msgid "Bubble"
 msgstr ""
 
-#: D:/git/free-version/vargal-additional-variation-gallery-for-woo/vargal-additional-variation-gallery-for-woo/admin/migrate.php:184
+#: D:/git/free-version/vargal-additional-variation-gallery-for-woo/vargal-additional-variation-gallery-for-woo/admin/migrate.php:212
 msgid ""
 "Can not find the meta key that one can use to store the variation gallery."
 msgstr ""
@@ -125,7 +125,7 @@ msgstr ""
 msgid "Color"
 msgstr ""
 
-#: D:/git/free-version/vargal-additional-variation-gallery-for-woo/vargal-additional-variation-gallery-for-woo/admin/migrate.php:248
+#: D:/git/free-version/vargal-additional-variation-gallery-for-woo/vargal-additional-variation-gallery-for-woo/admin/migrate.php:279
 msgid "Complete."
 msgstr ""
 
@@ -239,6 +239,10 @@ msgstr ""
 
 #: D:/git/free-version/vargal-additional-variation-gallery-for-woo/vargal-additional-variation-gallery-for-woo/admin/recommend.php:53
 msgid "Install"
+msgstr ""
+
+#: D:/git/free-version/vargal-additional-variation-gallery-for-woo/vargal-additional-variation-gallery-for-woo/admin/migrate.php:200
+msgid "Invalid security token. Please reload the page and try again."
 msgstr ""
 
 #: D:/git/free-version/vargal-additional-variation-gallery-for-woo/vargal-additional-variation-gallery-for-woo/admin/recommend.php:149
@@ -577,6 +581,10 @@ msgstr ""
 msgid ""
 "will help you solve the problem by using external image and external video "
 "URLs."
+msgstr ""
+
+#: D:/git/free-version/vargal-additional-variation-gallery-for-woo/vargal-additional-variation-gallery-for-woo/admin/migrate.php:206
+msgid "You do not have permission to run this action."
 msgstr ""
 
 #: D:/git/free-version/vargal-additional-variation-gallery-for-woo/vargal-additional-variation-gallery-for-woo/includes/data.php:73
